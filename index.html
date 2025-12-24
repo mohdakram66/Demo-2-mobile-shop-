@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Akram Mobile Shop</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f4f4f4;
+            color: #333;
+        }
+        .navbar {
+            background: #1a1a1a;
+            color: #fff;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .navbar-title {
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        .hamburger {
+            width: 24px;
+            cursor: pointer;
+        }
+        .hamburger span {
+            display: block;
+            height: 3px;
+            background: #fff;
+            margin: 4px 0;
+            border-radius: 2px;
+        }
+        .side-menu {
+            position: fixed;
+            top: 0;
+            right: -260px;
+            width: 240px;
+            height: 100%;
+            background: #111;
+            color: #fff;
+            padding: 60px 20px;
+            box-shadow: -4px 0 12px rgba(0,0,0,0.3);
+            transition: right 0.3s ease;
+            z-index: 1100;
+        }
+        .side-menu.active { right: 0; }
+        .side-menu h3 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+        }
+        .side-menu a {
+            display: block;
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 0;
+            border-bottom: 1px solid #333;
+            font-size: 0.95em;
+        }
+        .side-menu a:hover { color: #25D366; }
+        .close-menu {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 1.4em;
+            cursor: pointer;
+        }
+        header {
+            background: #1a1a1a;
+            color: #fff;
+            padding: 30px 0 20px;
+            text-align: center;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px 0 40px;
+        }
+        .section {
+            margin-top: 50px;
+            text-align: center;
+            padding: 30px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        .section h2 {
+            color: #1a1a1a;
+            margin-bottom: 20px;
+            font-size: 2.2em;
+            font-weight: 600;
+        }
+        .section p {
+            font-size: 1.1em;
+            line-height: 1.6;
+            color: #555;
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            padding: 40px;
+        }
+        .product-card {
+            border: 1px solid #ccc;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            background: #fff;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+        .product-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .product-card h3 {
+            margin: 15px 0 5px;
+            font-size: 1.2em;
+        }
+        .product-card .price {
+            color: #e74c3c;
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+        .whatsapp-btn {
+            display: inline-block;
+            background: #25D366;
+            color: #fff;
+            padding: 8px 12px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 10px;
+            transition: background 0.3s ease;
+        }
+        .whatsapp-btn:hover {
+            background: #128C7E;
+        }
+        .footer {
+            background: #1a1a1a;
+            color: #fff;
+            text-align: center;
+            padding: 20px 10px;
+            margin-top: 50px;
+            border-top: 1px solid #444;
+            font-size: 0.85em;
+        }
+        .footer a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 6px;
+        }
+        .footer a:hover { text-decoration: underline; }
+        .whatsapp-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #25D366;
+            color: #fff;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            z-index: 1000;
+            text-decoration: none;
+        }
+        @media (max-width: 600px){
+            .product-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="navbar-title">
+            <img src="logo.png" alt="Akram Mobile Shop Logo"
+                 style="height:28px;vertical-align:middle;margin-right:6px;">
+            Akram Mobile Shop
+        </div>
+        <div class="hamburger" id="menuToggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+
+    <div class="side-menu" id="sideMenu">
+        <div class="close-menu" id="closeMenu">&times;</div>
+        <h3>Menu</h3>
+        <a href="#products">Products</a>
+        <a href="#contact">Contact Us</a>
+        <a href="terms.html">Terms & Conditions</a>
+        <a href="about.html">About Us</a>
+        <a href="privacy-policy.html">Privacy Policy</a>
+    </div>
+
+    <header>
+        <h1>Latest Mobile Phones & Accessories</h1>
+    </header>
+
+    <div class="container">
+        <div class="section" id="products">
+            <h2>Our Products</h2>
+            <div class="product-grid">
+                <div class="product-card">
+                    <img src="https://images.samsung.com/is/image/samsung/p6pim/in/sm-s938bzdainu/gallery/in-galaxy-s25-5g-sm-s938bzdainu-540893417?$PD_GALLERY_L_JPG$" alt="Samsung Galaxy S25">
+                    <h3>Samsung Galaxy S25</h3>
+                    <p class="price">₹59,999</p>
+                    <a href="https://wa.me/916006587500?text=I want to order Samsung Galaxy S25" class="whatsapp-btn">Order on WhatsApp</a>
+                </div>
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1698663844859-53d885793722?w=600&auto=format&fit=crop&q=60" alt="iPhone 15">
+                    <h3>iPhone 15</h3>
+                    <p class="price">₹79,999</p>
+                    <a href="https://wa.me/916006587500?text=I want to order iPhone 15" class="whatsapp-btn">Order on WhatsApp</a>
+                </div>
+                <div class="product-card">
+                    <img src="https://i0.wp.com/gsmarena.com/wp-content/uploads/2024/12/Xiaomi_Redmi_Note_14_4G-1.jpg?w=600" alt="Redmi Note 14">
+                    <h3>Redmi Note 14</h3>
+                    <p class="price">₹19,999</p>
+                    <a href="https://wa.me/916006587500?text=I want to order Redmi Note 14" class="whatsapp-btn">Order on WhatsApp</a>
+                </div>
+                <div class="product-card">
+                    <img src="https://www.phonebunch.com/images/realme-narzo-70/realme-narzo-70-01.jpg" alt="Realme Narzo 70">
+                    <h3>Realme Narzo 70</h3>
+                    <p class="price">₹14,999</p>
+                    <a href="https://wa.me/916006587500?text=I want to order Realme Narzo 70" class="whatsapp-btn">Order on WhatsApp</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="contact">
+            <h2>Contact Us</h2>
+            <p>Feel free to contact us for any queries or bulk orders.</p>
+            <p>Email: <a href="mailto:akram.webstudio@gmail.com">akram.webstudio@gmail.com</a></p>
+            <p>Instagram: <a href="https://instagram.com/akram_web_designer" target="_blank">@akram_web_designer</a></p>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>
+            &copy; <span id="yearSpan"></span> Akram Mobile Shop. All rights reserved.<br/>
+            <a href="about.html">About Us</a> |
+            <a href="contact.html">Contact Us</a> |
+            <a href="privacy-policy.html">Privacy Policy</a> |
+            <a href="terms.html">Terms & Conditions</a>
+        </p>
+    </div>
+
+    <a href="https://wa.me/916006587500" class="whatsapp-float">💬</a>
+
+    <script>
+        document.getElementById("yearSpan").textContent = new Date().getFullYear();
+
+        const menuToggle = document.getElementById('menuToggle');
+        const sideMenu = document.getElementById('sideMenu');
+        const closeMenu = document.getElementById('closeMenu');
+
+        menuToggle.addEventListener('click', () => {
+            sideMenu.classList.add('active');
+        });
+        closeMenu.addEventListener('click', () => {
+            sideMenu.classList.remove('active');
+        });
+        sideMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => sideMenu.classList.remove('active'));
+        });
+    </script>
+</body>
+</html>
